@@ -1,5 +1,5 @@
 from django.contrib import admin
-from browser.models import Titlecrew
+from browser.models import BasicInfo
 # Register your models here.
 
-admin.site.register(Titlecrew)
+admin.site.register(BasicInfo)

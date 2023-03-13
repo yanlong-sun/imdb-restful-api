@@ -8,106 +8,6 @@
 from django.db import models
 
 
-# --- IMDB DATA --- #
-class Namebasics(models.Model):
-    nconst = models.TextField(blank=True, primary_key=True)
-    primaryname = models.TextField(db_column='primaryName', blank=True, null=True)  # Field name made lowercase.
-    birthyear = models.TextField(db_column='birthYear', blank=True, null=True)  # Field name made lowercase.
-    deathyear = models.TextField(db_column='deathYear', blank=True, null=True)  # Field name made lowercase.
-    primaryprofession = models.TextField(db_column='primaryProfession', blank=True, null=True)  # Field name made lowercase.
-    knownfortitles = models.TextField(db_column='knownForTitles', blank=True, null=True)  # Field name made lowercase.
-
-    # nconst = models.TextField(blank=True, primary_key=True)
-    # primaryname = models.TextField(db_column='primaryName', blank=True, null=True)  # Field name made lowercase.
-    # birthyear = models.TextField(db_column='birthYear', blank=True, null=True)  # Field name made lowercase.
-    # deathyear = models.TextField(db_column='deathYear', blank=True, null=True)  # Field name made lowercase.
-    # primaryprofession = models.TextField(db_column='primaryProfession', blank=True, null=True)  # Field name made lowercase.
-    # knownfortitles = models.TextField(db_column='knownForTitles', blank=True, null=True)  # Field name made lowercase.
-
-    def __str__(self):
-        return self.primaryname
-
-    class Meta:
-        managed = False
-        db_table = 'namebasics'
-
-
-class Titleakas(models.Model):
-    titleid = models.TextField(db_column='titleId', primary_key=True)  # Field name made lowercase.
-    ordering = models.TextField(blank=True, null=True)
-    title = models.TextField(blank=True, null=True)
-    region = models.TextField(blank=True, null=True)
-    language = models.TextField(blank=True, null=True)
-    types = models.TextField(blank=True, null=True)
-    attributes = models.TextField(blank=True, null=True)
-    isoriginaltitle = models.TextField(db_column='isOriginalTitle', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'titleakas'
-
-
-class Titlebasics(models.Model):
-    tconst = models.TextField(blank=True, primary_key=True)
-    titletype = models.TextField(db_column='titleType', blank=True, null=True)  # Field name made lowercase.
-    primarytitle = models.TextField(db_column='primaryTitle', blank=True, null=True)  # Field name made lowercase.
-    originaltitle = models.TextField(db_column='originalTitle', blank=True, null=True)  # Field name made lowercase.
-    isadult = models.TextField(db_column='isAdult', blank=True, null=True)  # Field name made lowercase.
-    startyear = models.TextField(db_column='startYear', blank=True, null=True)  # Field name made lowercase.
-    endyear = models.TextField(db_column='endYear', blank=True, null=True)  # Field name made lowercase.
-    runtimeminutes = models.TextField(db_column='runtimeMinutes', blank=True, null=True)  # Field name made lowercase.
-    genres = models.TextField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'titlebasics'
-
-
-class Titlecrew(models.Model):
-    tconst = models.TextField(blank=True, primary_key=True)
-    directors = models.TextField(blank=True, null=True)
-    writers = models.TextField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'titlecrew'
-
-
-class Titleepisode(models.Model):
-    tconst = models.TextField(blank=True, primary_key=True)
-    parenttconst = models.TextField(db_column='parentTconst', blank=True, null=True)  # Field name made lowercase.
-    seasonnumber = models.TextField(db_column='seasonNumber', blank=True, null=True)  # Field name made lowercase.
-    episodenumber = models.TextField(db_column='episodeNumber', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'titleepisode'
-
-
-class Titleprincipals(models.Model):
-    tconst = models.TextField(blank=True, primary_key=True)
-    ordering = models.TextField(blank=True, null=True)
-    nconst = models.TextField(blank=True, null=True)
-    category = models.TextField(blank=True, null=True)
-    job = models.TextField(blank=True, null=True)
-    characters = models.TextField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'titleprincipals'
-
-
-class Titleratings(models.Model):
-    tconst = models.TextField(blank=True, primary_key=True)
-    averagerating = models.FloatField(db_column='averageRating', blank=True, null=True)  # Field name made lowercase.
-    numvotes = models.BigIntegerField(db_column='numVotes', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'titleratings'
-
-
-# --- AUTH --- #
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
@@ -177,6 +77,25 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
+class BasicInfo(models.Model):
+    tconst = models.CharField(db_column='tconst', max_length=100, primary_key=True)
+    titletype = models.CharField(db_column='titleType', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    primarytitle = models.CharField(db_column='primaryTitle', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    originaltitle = models.CharField(db_column='originalTitle', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    isadult = models.BooleanField(db_column='isAdult', blank=True, null=True)  # Field name made lowercase.
+    startyear = models.DateField(db_column='startYear', blank=True, null=True)  # Field name made lowercase.
+    endyear = models.DateField(db_column='endYear', blank=True, null=True)  # Field name made lowercase.
+    runtimeminutes = models.CharField(db_column='runtimeMinutes', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    genres = models.CharField(db_column = 'genres', max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.tconst
+    
+    class Meta:
+        managed = False
+        db_table = 'basic_info'
+
+
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
     object_id = models.TextField(blank=True, null=True)
@@ -212,3 +131,103 @@ class DjangoMigrations(models.Model):
         db_table = 'django_migrations'
 
 
+class DjangoSession(models.Model):
+    session_key = models.CharField(primary_key=True, max_length=40)
+    session_data = models.TextField()
+    expire_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_session'
+
+
+class Namebasics(models.Model):
+    nconst = models.TextField(blank=True, primary_key=True)
+    primaryname = models.TextField(db_column='primaryName', blank=True, null=True)  # Field name made lowercase.
+    birthyear = models.TextField(db_column='birthYear', blank=True, null=True)  # Field name made lowercase.
+    deathyear = models.TextField(db_column='deathYear', blank=True, null=True)  # Field name made lowercase.
+    primaryprofession = models.TextField(db_column='primaryProfession', blank=True, null=True)  # Field name made lowercase.
+    knownfortitles = models.TextField(db_column='knownForTitles', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'namebasics'
+
+
+class Titleakas(models.Model):
+    titleid = models.TextField(db_column='titleId', blank=True, null=True)  # Field name made lowercase.
+    ordering = models.TextField(blank=True, null=True)
+    title = models.TextField(blank=True, null=True)
+    region = models.TextField(blank=True, null=True)
+    language = models.TextField(blank=True, null=True)
+    types = models.TextField(blank=True, null=True)
+    attributes = models.TextField(blank=True, null=True)
+    isoriginaltitle = models.TextField(db_column='isOriginalTitle', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'titleakas'
+
+
+class Titlebasics(models.Model):
+    index = models.BigIntegerField(blank=True, null=True)
+    tconst = models.TextField(blank=True, null=True)
+    titletype = models.TextField(db_column='titleType', blank=True, null=True)  # Field name made lowercase.
+    primarytitle = models.TextField(db_column='primaryTitle', blank=True, null=True)  # Field name made lowercase.
+    originaltitle = models.TextField(db_column='originalTitle', blank=True, null=True)  # Field name made lowercase.
+    isadult = models.TextField(db_column='isAdult', blank=True, null=True)  # Field name made lowercase.
+    startyear = models.TextField(db_column='startYear', blank=True, null=True)  # Field name made lowercase.
+    endyear = models.TextField(db_column='endYear', blank=True, null=True)  # Field name made lowercase.
+    runtimeminutes = models.TextField(db_column='runtimeMinutes', blank=True, null=True)  # Field name made lowercase.
+    genres = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'titlebasics'
+
+
+class Titlecrew(models.Model):
+    index = models.BigIntegerField(blank=True, null=True)
+    tconst = models.TextField(blank=True, null=True)
+    directors = models.TextField(blank=True, null=True)
+    writers = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'titlecrew'
+
+
+class Titleepisode(models.Model):
+    index = models.BigIntegerField(blank=True, null=True)
+    tconst = models.TextField(blank=True, null=True)
+    parenttconst = models.TextField(db_column='parentTconst', blank=True, null=True)  # Field name made lowercase.
+    seasonnumber = models.TextField(db_column='seasonNumber', blank=True, null=True)  # Field name made lowercase.
+    episodenumber = models.TextField(db_column='episodeNumber', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'titleepisode'
+
+
+class Titleprincipals(models.Model):
+    tconst = models.TextField(blank=True, null=True)
+    ordering = models.TextField(blank=True, null=True)
+    nconst = models.TextField(blank=True, null=True)
+    category = models.TextField(blank=True, null=True)
+    job = models.TextField(blank=True, null=True)
+    characters = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'titleprincipals'
+
+
+class Titleratings(models.Model):
+    index = models.BigIntegerField(blank=True, null=True)
+    tconst = models.TextField(blank=True, null=True)
+    averagerating = models.FloatField(db_column='averageRating', blank=True, null=True)  # Field name made lowercase.
+    numvotes = models.BigIntegerField(db_column='numVotes', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'titleratings'

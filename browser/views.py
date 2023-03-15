@@ -2,8 +2,7 @@ from django.http import Http404
 from browser import serializers
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
-from browser.models import TitleBasics, TitleAkas, TitleRatings, TitleEpisode
-from browser.models import NameBasics, TitleCrew, TitlePrincipals
+from browser.models import TitleBasics, NameBasics
 
 
 class TitleBaiscsView(ModelViewSet):

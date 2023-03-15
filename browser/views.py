@@ -3,6 +3,7 @@ from browser import serializers
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from browser.models import TitleBasics, NameBasics
+from browser.models import TitleEpisode, TitleRatings, TitleCrew, TitleAkas, TitlePrincipals
 
 
 class TitleBaiscsView(ModelViewSet):
@@ -14,6 +15,23 @@ class TitleBaiscsView(ModelViewSet):
     lookup_field = 'tconst'
 
 
+class TitleAkasView(ModelViewSet):
+    """
+    router : api/titles/<title_id>/akas
+    """
+    serializer_class = serializers.TitleAkasSerializer
+    lookup_field = 'titleid'
+
+    def get_queryset(self):
+        title_tconst = self.kwargs['tconst']
+        title_object = TitleBasics.objects.get(tconst=title_tconst)
+        try:
+            akas = title_object.akas
+        except TitleAkas.DoesNotExist:
+            raise Http404('Miss episode data')
+        return akas
+
+
 class TitlePrincipalsView(ModelViewSet):
     """
     router : api/titles/<title_id>/cast
@@ -23,7 +41,12 @@ class TitlePrincipalsView(ModelViewSet):
 
     def get_queryset(self):
         title_tconst = self.kwargs['tconst']
-        return TitleBasics.objects.get(tconst=title_tconst).principals
+        title_object = TitleBasics.objects.get(tconst=title_tconst)
+        try:
+            principals = title_object.principals
+        except TitlePrincipals.DoesNotExist:
+            raise Http404('Miss episode data')
+        return principals
 
 
 class TitleCrewView(ModelViewSet):
@@ -38,9 +61,9 @@ class TitleCrewView(ModelViewSet):
         title_object = TitleBasics.objects.get(tconst=title_tconst)
         try:
             crews = title_object.crew
-        except crews.DoesNotExist:
+        except TitleCrew.DoesNotExist:
             raise Http404('Miss crew data')
-        return crews
+        return [crews]
 
 
 class TitleEpisodeView(ModelViewSet):
@@ -55,7 +78,7 @@ class TitleEpisodeView(ModelViewSet):
         title_object = TitleBasics.objects.get(tconst=title_tconst)
         try:
             episodes = title_object.episode
-        except episodes.DoesNotExist:
+        except TitleEpisode.DoesNotExist:
             raise Http404('Miss episode data')
         return [episodes]
 
@@ -72,7 +95,7 @@ class TitleRatingsView(ModelViewSet):
         title_object = TitleBasics.objects.get(tconst=title_tconst)
         try:
             ratings = title_object.rating
-        except ratings.DoesNotExist:
+        except TitleRatings.DoesNotExist:
             raise Http404('Miss rating data')
         return [ratings]
 

@@ -9,8 +9,10 @@ router.register('name', views.NameBasicsView, basename='name')
 urlpatterns = [
     path('title/<slug:tconst>/cast', views.TitlePrincipalsView.as_view({'get': 'list',
                                                                         'post': 'create'})),
-    path('title/<slug:tconst>/crew', views.TitlePrincipalsView.as_view({'get': 'list',
-                                                                        'post': 'create'})),
+    path('title/<slug:tconst>/akas', views.TitleAkasView.as_view({'get': 'list',
+                                                                  'post': 'create'})),
+    path('title/<slug:tconst>/crew', views.TitleCrewView.as_view({'get': 'list',
+                                                                  'post': 'create'})),
     path('title/<slug:tconst>/episode', views.TitleEpisodeView.as_view({'get': 'list',
                                                                         'post': 'create'})),
     path('title/<slug:tconst>/ratings', views.TitleRatingsView.as_view({'get': 'list',

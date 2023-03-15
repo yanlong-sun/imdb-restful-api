@@ -151,7 +151,7 @@ class TitleBasics(models.Model):
     genres = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.originalTitle
+        return self.tconst
 
     class Meta:
         managed = False
@@ -174,7 +174,7 @@ class TitleAkas(models.Model):
                                           blank=True, null=True)
 
     def __str__(self):
-        return self.title
+        return self.titleid
 
     class Meta:
         managed = False
@@ -194,7 +194,7 @@ class TitleRatings(models.Model):
                                       blank=True, null=True)
 
     def __str__(self):
-        return str(self.averagerating)
+        return self.tconst
 
     class Meta:
         managed = False

@@ -24,7 +24,7 @@ class TitleCrewSerializer(ModelSerializer):
 class TitleAkasSerializer(ModelSerializer):
     class Meta:
         model = TitleAkas
-        fields = '__all__'
+        exclude = ['index']
 
 
 class TitleRatingsSerializer(ModelSerializer):

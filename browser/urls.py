@@ -1,11 +1,14 @@
 from django.urls import path
-from browser import views
-from rest_framework import routers
-router = routers.DefaultRouter()
-router.register('', views.movieView)
-router_name = ['title', 'name', 'titleaka', '']
-urlpatterns = []
-urlpatterns += router.urls
+# from browser import views
+# from rest_framework import routers
+# router = routers.DefaultRouter()
+# router.register('', views.movieView)
+# router_name = ['title', 'name', 'titleaka', '']
+# urlpatterns = []
+# urlpatterns += router.urls
+urlpatterns = [
+
+]
 
 
 # urlpatterns = [

@@ -124,11 +124,11 @@ class DjangoSession(models.Model):
 
 
 """
-data starts:
+db models starts here
 """
 
 
-class Titlebasics(models.Model):
+class TitleBasics(models.Model):
     tconst = models.CharField(max_length=100, primary_key=True)
     titletype = models.CharField(max_length=100,
                                  db_column='titleType',
@@ -139,93 +139,119 @@ class Titlebasics(models.Model):
     originaltitle = models.CharField(max_length=100,
                                      db_column='originalTitle',
                                      blank=True, null=True)
-    isadult = models.CharField(
-        max_length=100, db_column='isAdult', blank=True, null=True)
-    startyear = models.CharField(
-        max_length=100, db_column='startYear', blank=True, null=True)
-    endyear = models.CharField(
-        max_length=100, db_column='endYear', blank=True, null=True)
-    runtimeminutes = models.CharField(max_length=100,
-                                      db_column='runtimeMinutes', blank=True, null=True)
+    isadult = models.BooleanField(db_column='isAdult',
+                                  blank=True, null=True)
+    startyear = models.IntegerField(db_column='startYear',
+                                    blank=True, null=True)
+    endyear = models.IntegerField(db_column='endYear',
+                                  blank=True, null=True)
+    runtimeminutes = models.IntegerField(db_column='runtimeMinutes',
+                                         blank=True, null=True)
     genres = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.primarytitle
 
     class Meta:
         managed = False
         db_table = 'titlebasics'
 
 
-class Namebasics(models.Model):
-    nconst = models.CharField(max_length=100, primary_key=True)
-    primaryname = models.CharField(max_length=128,
-                                   db_column='primaryName',
-                                   blank=True, null=True)
-    birthyear = models.CharField(max_length=128,
-                                 db_column='birthYear',
-                                 blank=True, null=True)
-    deathyear = models.CharField(max_length=128,
-                                 db_column='deathYear',
-                                 blank=True, null=True)
-    primaryprofession = models.CharField(max_length=128,
-                                         db_column='primaryProfession',
-                                         blank=True, null=True)
-    knownfortitles = models.CharField(max_length=128,
-                                      db_column='knownForTitles',
-                                      blank=True, null=True)
-
-    def __str__(self):
-        return self.primaryname
-
-    class Meta:
-        managed = False
-        db_table = 'namebasics'
-
-
-class Titleakas(models.Model):
-    titleid = models.TextField(db_column='titleId', blank=True, null=True)
-    ordering = models.TextField(blank=True, null=True)
-    title = models.TextField(blank=True, null=True)
-    region = models.TextField(blank=True, null=True)
-    language = models.TextField(blank=True, null=True)
-    types = models.TextField(blank=True, null=True)
-    attributes = models.TextField(blank=True, null=True)
-    isoriginaltitle = models.TextField(
-        db_column='isOriginalTitle', blank=True, null=True)
+class TitleAkas(models.Model):
+    titleid = models.ForeignKey(TitleBasics,
+                                db_column='titleId',
+                                on_delete=models.CASCADE,
+                                related_name='akas')
+    ordering = models.IntegerField(blank=True, null=True)
+    title = models.CharField(max_length=100, blank=True, null=True)
+    region = models.CharField(max_length=100, blank=True, null=True)
+    language = models.CharField(max_length=100, blank=True, null=True)
+    types = models.CharField(max_length=100, blank=True, null=True)
+    attributes = models.CharField(max_length=100, blank=True, null=True)
+    isoriginaltitle = models.BooleanField(db_column='isOriginalTitle',
+                                          blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'titleakas'
 
 
-class Titlecrew(models.Model):
-    index = models.BigIntegerField(blank=True, null=True)
-    tconst = models.TextField(blank=True, null=True)
-    directors = models.TextField(blank=True, null=True)
-    writers = models.TextField(blank=True, null=True)
+class TitleCrew(models.Model):
+    tconst = models.OneToOneField(TitleBasics,
+                                  on_delete=models.CASCADE,
+                                  related_name='crew',
+                                  null=True)
+    directors = models.CharField(max_length=100, blank=True, null=True)
+    writers = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'titlecrew'
 
 
-class Titleepisode(models.Model):
-    index = models.BigIntegerField(blank=True, null=True)
-    tconst = models.TextField(blank=True, null=True)
-    parenttconst = models.TextField(
-        db_column='parentTconst', blank=True, null=True)
-    seasonnumber = models.TextField(
-        db_column='seasonNumber', blank=True, null=True)
-    episodenumber = models.TextField(
-        db_column='episodeNumber', blank=True, null=True)
+class TitleRatings(models.Model):
+    tconst = models.OneToOneField(TitleBasics,
+                                  on_delete=models.CASCADE,
+                                  related_name='rating',
+                                  null=True)
+    averagerating = models.FloatField(db_column='averageRating',
+                                      blank=True, null=True)
+    numvotes = models.BigIntegerField(db_column='numVotes',
+                                      blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'titleratings'
+
+
+class TitleEpisode(models.Model):
+    tconst = models.OneToOneField(TitleBasics,
+                                  on_delete=models.CASCADE,
+                                  related_name='episode',
+                                  null=True)
+    parenttconst = models.OneToOneField(TitleBasics,
+                                        on_delete=models.CASCADE,
+                                        related_name='parent',
+                                        null=True)
+    seasonnumber = models.IntegerField(db_column='seasonNumber',
+                                       blank=True, null=True)
+    episodenumber = models.IntegerField(db_column='episodeNumber',
+                                        blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'titleepisode'
 
 
-class Titleprincipals(models.Model):
-    tconst = models.TextField(blank=True, null=True)
-    ordering = models.TextField(blank=True, null=True)
-    nconst = models.TextField(blank=True, null=True)
+class NameBasics(models.Model):
+    nconst = models.CharField(max_length=100, primary_key=True)
+    primaryname = models.CharField(max_length=100,
+                                   db_column='primaryName',
+                                   blank=True, null=True)
+    birthyear = models.IntegerField(db_column='birthYear',
+                                    blank=True, null=True)
+    deathyear = models.IntegerField(db_column='deathYear',
+                                    blank=True, null=True)
+    primaryprofession = models.CharField(max_length=100,
+                                         db_column='primaryProfession',
+                                         blank=True, null=True)
+    knownfortitles = models.CharField(max_length=255,
+                                      db_column='knownForTitles',
+                                      blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'namebasics'
+
+
+class TitlePrincipals(models.Model):
+    tconst = models.ForeignKey(TitleBasics,
+                               on_delete=models.CASCADE,
+                               related_name='principals')
+    ordering = models.IntegerField(blank=True, null=True)
+    nconst = models.ForeignKey(NameBasics,
+                               on_delete=models.CASCADE,
+                               related_name='principals')
     category = models.TextField(blank=True, null=True)
     job = models.TextField(blank=True, null=True)
     characters = models.TextField(blank=True, null=True)
@@ -233,46 +259,3 @@ class Titleprincipals(models.Model):
     class Meta:
         managed = False
         db_table = 'titleprincipals'
-
-
-class Titleratings(models.Model):
-    index = models.BigIntegerField(blank=True, null=True)
-    tconst = models.TextField(blank=True, null=True)
-    averagerating = models.FloatField(
-        db_column='averageRating', blank=True, null=True)
-    numvotes = models.BigIntegerField(
-        db_column='numVotes', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'titleratings'
-
-
-"""
-Define some new fields 
-"""
-
-
-class TextBooleanField(models.CharField):
-    description = _("1" is True, "0" is False)
-
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault('max_length', 1)
-        super().__init__(*args, **kwargs)
-
-    def from_db_value(self, value, expression, connection):
-        if value is None:
-            return None
-        return value == '1'
-
-    def to_python(self, value):
-        if isinstance(value, bool):
-            return bool
-        if value is None:
-            return None
-        return value == '1'
-
-    def get_prep_value(self, value):
-        if value is None:
-            return None
-        return '1' if value else '0'

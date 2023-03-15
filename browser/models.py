@@ -129,6 +129,7 @@ db models starts here
 
 
 class TitleBasics(models.Model):
+    index = models.BigIntegerField(blank=True, null=True)
     tconst = models.CharField(max_length=100, primary_key=True)
     titletype = models.CharField(max_length=100,
                                  db_column='titleType',
@@ -150,7 +151,7 @@ class TitleBasics(models.Model):
     genres = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.primarytitle
+        return self.originalTitle
 
     class Meta:
         managed = False
@@ -158,6 +159,7 @@ class TitleBasics(models.Model):
 
 
 class TitleAkas(models.Model):
+    index = models.BigIntegerField(primary_key=True)
     titleid = models.ForeignKey(TitleBasics,
                                 db_column='titleId',
                                 on_delete=models.CASCADE,
@@ -171,33 +173,28 @@ class TitleAkas(models.Model):
     isoriginaltitle = models.BooleanField(db_column='isOriginalTitle',
                                           blank=True, null=True)
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         managed = False
         db_table = 'titleakas'
 
 
-class TitleCrew(models.Model):
-    tconst = models.OneToOneField(TitleBasics,
-                                  on_delete=models.CASCADE,
-                                  related_name='crew',
-                                  null=True)
-    directors = models.CharField(max_length=100, blank=True, null=True)
-    writers = models.CharField(max_length=100, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'titlecrew'
-
-
 class TitleRatings(models.Model):
+    index = models.BigIntegerField(primary_key=True)
     tconst = models.OneToOneField(TitleBasics,
                                   on_delete=models.CASCADE,
                                   related_name='rating',
-                                  null=True)
+                                  null=True,
+                                  db_column='tconst')
     averagerating = models.FloatField(db_column='averageRating',
                                       blank=True, null=True)
     numvotes = models.BigIntegerField(db_column='numVotes',
                                       blank=True, null=True)
+
+    def __str__(self):
+        return str(self.averagerating)
 
     class Meta:
         managed = False
@@ -205,18 +202,24 @@ class TitleRatings(models.Model):
 
 
 class TitleEpisode(models.Model):
+    index = models.BigIntegerField(primary_key=True)
     tconst = models.OneToOneField(TitleBasics,
                                   on_delete=models.CASCADE,
                                   related_name='episode',
-                                  null=True)
+                                  null=True,
+                                  db_column='tconst')
     parenttconst = models.OneToOneField(TitleBasics,
                                         on_delete=models.CASCADE,
                                         related_name='parent',
+                                        db_column='parentTconst',
                                         null=True)
     seasonnumber = models.IntegerField(db_column='seasonNumber',
                                        blank=True, null=True)
     episodenumber = models.IntegerField(db_column='episodeNumber',
                                         blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.tconst.primarytitle}'
 
     class Meta:
         managed = False
@@ -239,22 +242,59 @@ class NameBasics(models.Model):
                                       db_column='knownForTitles',
                                       blank=True, null=True)
 
+    def __str__(self):
+        return self.primaryname
+
     class Meta:
         managed = False
         db_table = 'namebasics'
 
 
+class TitleCrew(models.Model):
+    index = models.BigIntegerField(primary_key=True)
+    tconst = models.OneToOneField(TitleBasics,
+                                  on_delete=models.CASCADE,
+                                  related_name='crew',
+                                  null=True,
+                                  db_column='tconst')
+    # directors = models.CharField(max_length=100, blank=True, null=True)
+    directors = models.ForeignKey(NameBasics,
+                                  on_delete=models.CASCADE,
+                                  related_name='directors',
+                                  null=True,
+                                  db_column='directors')
+    # writers = models.CharField(max_length=100, blank=True, null=True)
+    writers = models.ForeignKey(NameBasics,
+                                on_delete=models.CASCADE,
+                                related_name='writers',
+                                null=True,
+                                db_column='writers')
+
+    def __str__(self):
+        return f'{self.directors.primaryname if self.directors else "Unknown"}, {self.writers.primaryname if self.writers else "Unknown"}'
+
+    class Meta:
+        managed = False
+        db_table = 'titlecrew'
+
+
 class TitlePrincipals(models.Model):
+    index = models.BigIntegerField(primary_key=True)
     tconst = models.ForeignKey(TitleBasics,
                                on_delete=models.CASCADE,
-                               related_name='principals')
+                               related_name='principals',
+                               db_column='tconst')
     ordering = models.IntegerField(blank=True, null=True)
     nconst = models.ForeignKey(NameBasics,
                                on_delete=models.CASCADE,
-                               related_name='principals')
+                               related_name='principals',
+                               db_column='nconst')
     category = models.TextField(blank=True, null=True)
     job = models.TextField(blank=True, null=True)
     characters = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.nconst.primaryname}'
 
     class Meta:
         managed = False

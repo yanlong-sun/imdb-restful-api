@@ -1,8 +1,8 @@
-### Movie/TV Show Information API
+# Movie/TV Show Information API
 
 IMDb Datasets Description: https://www.imdb.com/interfaces/
 
-### Endpoints
+## Endpoints
 
 - [Retrieves a list of titles  
    `GET /api/name/`](#retrieves-a-list-of-titles)
@@ -19,7 +19,9 @@ IMDb Datasets Description: https://www.imdb.com/interfaces/
 - [Retrieves the ratings for a specific title  
   `GET /api/title/<slug:tconst>/ratings`](#retrieves-the-ratings-for-a-specific-title)
 
-#### Retrieves a list of titles.
+---
+
+### Retrieves a list of titles.
 
 ##### `GET /api/title/`
 
@@ -34,7 +36,9 @@ Body:
 `runtimeMinutes` – primary runtime of the title, in minutes
 `genres` (string array) – includes up to three genres associated with the title
 
-#### Retrieves a list of names.
+---
+
+### Retrieves a list of names.
 
 ##### `GET /api/name/`
 
@@ -47,7 +51,9 @@ Body:
 `primaryProfession` (array of strings)– the top-3 professions of the person
 `knownForTitles` (array of tconsts) – titles the person is known for
 
-#### Retrieves a list of cast members for a specific title.
+---
+
+### Retrieves a list of cast members for a specific title.
 
 ##### `GET /api/title/<slug:tconst>/cast`
 
@@ -64,7 +70,9 @@ Body:
 `job` (string) - the specific job title if applicable, else ''
 `characters` (string) - the name of the character played if applicable, else ''
 
-#### Retrieves a list of alternate titles for a specific title.
+---
+
+### Retrieves a list of alternate titles for a specific title.
 
 ##### `GET /api/title/<slug:tconst>/akas`
 
@@ -83,7 +91,9 @@ Body:
 `attributes` (array) - Additional terms to describe this alternative title, not enumerated
 `isOriginalTitle` (boolean) – False: not original title; True: original title
 
-#### Retrieves a list of crew members for a specific title.
+---
+
+### Retrieves a list of crew members for a specific title.
 
 ##### `GET /api/title/<slug:tconst>/crew`
 
@@ -97,7 +107,9 @@ Body:
 `directors` (array of nconsts) - director(s) of the given title
 `writers` (array of nconsts) – writer(s) of the given title
 
-#### Retrieves a list of episodes for a specific title.
+---
+
+### Retrieves a list of episodes for a specific title.
 
 ##### `GET /api/title/<slug:tconst>/episode`
 
@@ -112,7 +124,9 @@ Body:
 `seasonNumber` (integer) – season number the episode belongs to
 `episodeNumber` (integer) – episode number of the tconst in the TV series
 
-#### Retrieves the ratings for a specific title.
+---
+
+### Retrieves the ratings for a specific title.
 
 ##### `GET /api/title/<slug:tconst>/ratings`
 

@@ -68,7 +68,7 @@ Body:
 
 Parameters:
 
-- `tconst `(slug): Unique identifier for the title.
+- `tconst `(string): Unique identifier for the title.
 
 Body:  
 `titleId` (string) - a tconst, an alphanumeric unique identifier of the title  

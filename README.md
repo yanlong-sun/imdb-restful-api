@@ -23,7 +23,7 @@ IMDb Datasets Description: https://www.imdb.com/interfaces/
 
 ##### `GET /api/title/`
 
-Body:
+Body:  
 `tconst` (string) - alphanumeric unique identifier of the title  
 `titleType` (string) – the type/format of the title (e.g. movie, short, tvseries, tvepisode, video, etc)  
 `primaryTitle` (string) – the more popular title / the title used by the filmmakers on promotional materials at the point of release  
@@ -38,7 +38,7 @@ Body:
 
 ##### `GET /api/name/`
 
-###### Body:
+Body:
 
 `nconst` (string) - alphanumeric unique identifier of the name/person  
 `primaryName` (string)– name by which the person is most often credited  

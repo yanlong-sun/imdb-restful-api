@@ -33,13 +33,14 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'browser',
+    'rest_framework',
+    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -73,8 +74,19 @@ TEMPLATES = [
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
-    ]
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_THROTTLE_RATES': [],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
+
 }
 
 WSGI_APPLICATION = 'jamiemovie.wsgi.application'
@@ -93,7 +105,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 
 # Password validation

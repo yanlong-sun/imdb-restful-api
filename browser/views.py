@@ -4,21 +4,18 @@ from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from browser.models import TitleBasics, NameBasics
 from browser.models import TitleEpisode, TitleRatings, TitleCrew, TitleAkas, TitlePrincipals
+from django_filters import rest_framework as filters
+from browser.filters import TitleBasicsFilter
 
 
 class TitleBaiscsView(ModelViewSet):
-    """
-    router : api/titles/<title_id>
-    """
-    queryset = TitleBasics.objects.all()
+    queryset = TitleBasics.objects.all()[:10]
     serializer_class = serializers.TitleBasicsSerializer
     lookup_field = 'tconst'
+    filter_class = TitleBasicsFilter
 
 
 class TitleAkasView(ModelViewSet):
-    """
-    router : api/titles/<title_id>/akas
-    """
     serializer_class = serializers.TitleAkasSerializer
     lookup_field = 'titleid'
 
@@ -33,9 +30,6 @@ class TitleAkasView(ModelViewSet):
 
 
 class TitlePrincipalsView(ModelViewSet):
-    """
-    router : api/titles/<title_id>/cast
-    """
     serializer_class = serializers.TitlePrincipalsSerializer
     lookup_field = 'tconst'
 
@@ -50,9 +44,6 @@ class TitlePrincipalsView(ModelViewSet):
 
 
 class TitleCrewView(ModelViewSet):
-    """
-    router: api/titles/<title_id>/crew
-    """
     serializer_class = serializers.TitleCrewSerializer
     lookup_field = 'tconst'
 
@@ -67,9 +58,6 @@ class TitleCrewView(ModelViewSet):
 
 
 class TitleEpisodeView(ModelViewSet):
-    """
-    router: api/titles/<title_id>/episode
-    """
     serializer_class = serializers.TitleEpisodeSerializer
     lookup_field = 'tconst'
 
@@ -84,9 +72,6 @@ class TitleEpisodeView(ModelViewSet):
 
 
 class TitleRatingsView(ModelViewSet):
-    """
-    router: api/titles/<title_id>/ratings
-    """
     serializer_class = serializers.TitleRatingsSerializer
     lookup_field = 'tconst'
 
@@ -101,17 +86,6 @@ class TitleRatingsView(ModelViewSet):
 
 
 class NameBasicsView(ModelViewSet):
-    """
-    router: api/name/<name_id>
-    """
     queryset = NameBasics.objects.all()
     serializer_class = serializers.NameBasicsSerializer
     lookup_field = 'nconst'
-
-
-"""
-one more for :
-api/people/<person_id>/titles: Get the titles a specific person is known for
-
-
-"""

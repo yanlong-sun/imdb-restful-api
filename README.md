@@ -38,8 +38,7 @@ Body:
 
 ##### `GET /api/name/`
 
-Body:
-
+Body:  
 `nconst` (string) - alphanumeric unique identifier of the name/person  
 `primaryName` (string)– name by which the person is most often credited  
 `birthYear` – in YYYY format  
@@ -55,8 +54,7 @@ Parameters:
 
 - `tconst` (string): Unique identifier for the title.
 
-Body:
-
+Body:  
 `tconst` (string) - alphanumeric unique identifier of the title  
 `ordering` (integer) – a number to uniquely identify rows for a given titleId  
 `nconst` (string) - alphanumeric unique identifier of the name/person  
@@ -72,8 +70,7 @@ Parameters:
 
 - `tconst `(slug): Unique identifier for the title.
 
-Body:
-
+Body:  
 `titleId` (string) - a tconst, an alphanumeric unique identifier of the title  
 `ordering` (integer) – a number to uniquely identify rows for a given titleId  
 `title` (string) – the localized title  
@@ -91,8 +88,7 @@ Parameters:
 
 - `tconst` (string): Unique identifier for the title.
 
-Body:
-
+Body:  
 `tconst` (string) - alphanumeric unique identifier of the title  
 `directors` (array of nconsts) - director(s) of the given title  
 `writers` (array of nconsts) – writer(s) of the given title
@@ -105,8 +101,7 @@ Parameters:
 
 - `tconst` (string): Unique identifier for the title.
 
-Body:
-
+Body:  
 `tconst` (string) - alphanumeric identifier of episode  
 `parentTconst` (string) - alphanumeric identifier of the parent TV Series  
 `seasonNumber` (integer) – season number the episode belongs to  
@@ -120,8 +115,7 @@ Parameters:
 
 - `tconst` (string): Unique identifier for the title.
 
-Body:
-
+Body:  
 `tconst` (string) - alphanumeric unique identifier of the title  
 `averageRating` – weighted average of all the individual user ratings  
 `numVotes` - number of votes the title has received

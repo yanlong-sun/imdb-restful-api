@@ -1,13 +1,13 @@
-Movie/TV Show Information API
+### Movie/TV Show Information API
 
-Endpoints
+#### Endpoints
 
-`GET /api/title/`
-Retrieves a list of titles.
+##### `GET /api/title/`
 
-Parameters:
+##### Retrieves a list of titles.
 
-None
+Parameters:  
+ None
 
 Body:
 `titleId` (string) - a tconst, an alphanumeric unique identifier of the title
@@ -19,12 +19,14 @@ Body:
 `attributes` (array) - Additional terms to describe this alternative title, not enumerated
 `isOriginalTitle` (boolean) – False: not original title; True: original title
 
-`GET /api/name/`
-Retrieves a list of names.
+##### `GET /api/name/`
+
+##### Retrieves a list of names.
 
 Parameters:
 
-Body:
+- None  
+  Body:
 
 `nconst` (string) - alphanumeric unique identifier of the name/person
 `primaryName` (string)– name by which the person is most often credited
@@ -33,62 +35,64 @@ Body:
 `primaryProfession` (array of strings)– the top-3 professions of the person
 `knownForTitles` (array of tconsts) – titles the person is known for
 
-`GET /api/title/<slug:tconst>/cast`
-Retrieves a list of cast members for a specific title.
+##### `GET /api/title/<slug:tconst>/cast`
+
+##### Retrieves a list of cast members for a specific title.
 
 Parameters:
 
-`tconst` (string): Unique identifier for the title.
+- `tconst` (string): Unique identifier for the title.
 
 Body:
 
 `name` (string): Name of the cast member.
 `character` (string): Name of the character played by the cast member.
 
-`GET /api/title/<slug:tconst>/cast`
-Retrieves a list of cast members for a specific title.
+##### `GET /api/title/<slug:tconst>/cast`
+
+##### Retrieves a list of cast members for a specific title.
 
 Parameters:
 
-`tconst` (string): Unique identifier for the title.
+- `tconst` (string): Unique identifier for the title.
 
 Body:
 
 `name` (string): Name of the cast member.
 `character` (string): Name of the character played by the cast member.
 
-`GET /api/title/<slug:tconst>/akas`
-Retrieves a list of alternate titles for a specific title.
+##### `GET /api/title/<slug:tconst>/akas`
+
+##### Retrieves a list of alternate titles for a specific title.
 
 Parameters:
 
-`tconst `(slug): Unique identifier for the title.
+- `tconst `(slug): Unique identifier for the title.
 
-Parameters:
-
-`tconst` (string): Unique identifier for the title.
 Body:
 
 `title `(string): Name of the alternate title.
 
-`GET /api/title/<slug:tconst>/crew`
-Retrieves a list of crew members for a specific title.
+##### `GET /api/title/<slug:tconst>/crew`
+
+##### Retrieves a list of crew members for a specific title.
 
 Parameters:
 
-`tconst` (string): Unique identifier for the title.
+- `tconst` (string): Unique identifier for the title.
 
 Body:
 
 name (string): Name of the crew member.
 job (string): Job position of the crew member.
 
-`GET /api/title/<slug:tconst>/episode`
-Retrieves a list of episodes for a specific title.
+##### `GET /api/title/<slug:tconst>/episode`
+
+##### Retrieves a list of episodes for a specific title.
 
 Parameters:
 
-`tconst` (string): Unique identifier for the title.
+- `tconst` (string): Unique identifier for the title.
 
 Body:
 
@@ -96,12 +100,13 @@ season_number (integer): Number of the season the episode belongs to.
 episode_number (integer): Number of the episode within the season.
 title (string): Name of the episode.
 
-`GET /api/title/<slug:tconst>/ratings`
-Retrieves the ratings for a specific title.
+##### `GET /api/title/<slug:tconst>/ratings`
+
+##### Retrieves the ratings for a specific title.
 
 Parameters:
 
-`tconst` (string): Unique identifier for the title.
+- `tconst` (string): Unique identifier for the title.
 
 Body:
 

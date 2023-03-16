@@ -4,13 +4,20 @@ IMDb Datasets Description: https://www.imdb.com/interfaces/
 
 ### Endpoints
 
-- [Retrieves a list of titles](#retrieves-a-list-of-titles)
-- [Retrieves a list of names](#retrieves-a-list-of-names)
-- [Retrieves a list of cast members for a specific title](#retrieves-a-list-of-cast-members-for-a-specific-title)
-- [Retrieves a list of alternate titles for a specific title](#retrieves-a-list-of-alternate-titles-for-a-specific-title)
-- [Retrieves a list of crew members for a specific title](#retrieves-a-list-of-crew-members-for-a-specific-title)
-- [Retrieves a list of episodes for a specific title](#retrieves-a-list-of-episodes-for-a-specific-title)
-- [Retrieves the ratings for a specific title](#retrieves-the-ratings-for-a-specific-title)
+- [Retrieves a list of titles  
+   `GET /api/name/`](#retrieves-a-list-of-titles)
+- [Retrieves a list of names  
+   `GET /api/name/`](#retrieves-a-list-of-names)
+- [Retrieves a list of cast members for a specific title  
+  `GET /api/title/<slug:tconst>/cast`](#retrieves-a-list-of-cast-members-for-a-specific-title)
+- [Retrieves a list of alternate titles for a specific title
+  `GET /api/title/<slug:tconst>/akas`](#retrieves-a-list-of-alternate-titles-for-a-specific-title)
+- [Retrieves a list of crew members for a specific title
+  `GET /api/title/<slug:tconst>/crew`](#retrieves-a-list-of-crew-members-for-a-specific-title)
+- [Retrieves a list of episodes for a specific title  
+   `GET /api/title/<slug:tconst>/episode`](#retrieves-a-list-of-episodes-for-a-specific-title)
+- [Retrieves the ratings for a specific title
+  `GET /api/title/<slug:tconst>/ratings`](#retrieves-the-ratings-for-a-specific-title)
 
 #### Retrieves a list of titles.
 

@@ -4,15 +4,12 @@ from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from browser.models import TitleBasics, NameBasics
 from browser.models import TitleEpisode, TitleRatings, TitleCrew, TitleAkas, TitlePrincipals
-from django_filters import rest_framework as filters
-from browser.filters import TitleBasicsFilter
 
 
 class TitleBaiscsView(ModelViewSet):
     queryset = TitleBasics.objects.all()[:10]
     serializer_class = serializers.TitleBasicsSerializer
     lookup_field = 'tconst'
-    filter_class = TitleBasicsFilter
 
 
 class TitleAkasView(ModelViewSet):

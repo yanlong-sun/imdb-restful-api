@@ -42,6 +42,7 @@ Body:
 <li>`genres` (string array) – includes up to three genres associated with the title</li>
  </ul>
 ]</ul>
+
 ## Retrieves a list of names.
 
 ##### `GET /api/name/`
@@ -86,6 +87,7 @@ Body:
 <li>`characters` (string) - the name of the character played if applicable, else ''</li>
 </ul>
 ]</ul>
+
 ## Retrieves a list of alternate titles for a specific title.
 
 ##### `GET /api/title/<slug:tconst>/akas`
@@ -112,6 +114,7 @@ Body:
 <li>`isOriginalTitle` (boolean) – False: not original title; True: original title</li>
 </ul>
 ]</ul>
+
 ## Retrieves a list of crew members for a specific title.
 
 ##### `GET /api/title/<slug:tconst>/crew`
@@ -133,6 +136,7 @@ Body:
 <li>`writers` (array of nconsts) – writer(s) of the given title</li>
 </ul>
 ]</ul>
+
 ## Retrieves a list of episodes for a specific title.
 
 ##### `GET /api/title/<slug:tconst>/episode`
@@ -155,6 +159,7 @@ Body:
 <li>`episodeNumber` (integer) – episode number of the tconst in the TV series</li>
 </ul>
 ]</ul>
+
 ## Retrieves the ratings for a specific title.
 
 ##### `GET /api/title/<slug:tconst>/ratings`

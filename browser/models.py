@@ -194,7 +194,7 @@ class TitleRatings(models.Model):
                                       blank=True, null=True)
 
     def __str__(self):
-        return self.tconst
+        return str(self.index)
 
     class Meta:
         managed = False

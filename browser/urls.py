@@ -3,7 +3,7 @@ from browser import views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('title', views.TitleBaiscsView, basename='title')
+router.register('title', views.TitleBasicsView, basename='title')
 router.register('name', views.NameBasicsView, basename='name')
 
 urlpatterns = [

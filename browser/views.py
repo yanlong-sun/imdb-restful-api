@@ -1,46 +1,71 @@
 from django.http import Http404
 from browser import serializers
+from browser import pagination
+from rest_framework.response import Response
+from rest_framework.generics import ListAPIView
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from browser.models import TitleBasics, NameBasics
 from browser.models import TitleEpisode, TitleRatings, TitleCrew, TitleAkas, TitlePrincipals
-from django_filters import rest_framework as filters
-from browser.filters import TitleBasicsFilter
 
 
-class TitleBaiscsView(ModelViewSet):
-    queryset = TitleBasics.objects.all()[:10]
+class TitleBasicsView(ModelViewSet):
+    queryset = TitleBasics.objects.all()
     serializer_class = serializers.TitleBasicsSerializer
     lookup_field = 'tconst'
-    filter_class = TitleBasicsFilter
+
+    pagination_class = pagination.BasicPagination
+
+    def list(self, requst):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class TitleAkasView(ModelViewSet):
     serializer_class = serializers.TitleAkasSerializer
     lookup_field = 'titleid'
+    pagination_class = pagination.BasicPagination
 
-    def get_queryset(self):
+    def list(self, request, *args, **kwargs):
         title_tconst = self.kwargs['tconst']
         title_object = TitleBasics.objects.get(tconst=title_tconst)
         try:
-            akas = title_object.akas
+            akas = title_object.akas.all()
         except TitleAkas.DoesNotExist:
-            raise Http404('Miss episode data')
-        return akas
+            raise Http404('Miss alternate names data')
+        queryset = self.filter_queryset(akas)
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class TitlePrincipalsView(ModelViewSet):
     serializer_class = serializers.TitlePrincipalsSerializer
     lookup_field = 'tconst'
+    pagination_class = pagination.BasicPagination
 
-    def get_queryset(self):
+    def list(self, request, *args, **kwargs):
         title_tconst = self.kwargs['tconst']
         title_object = TitleBasics.objects.get(tconst=title_tconst)
         try:
-            principals = title_object.principals
+            principals = title_object.principals.all()
         except TitlePrincipals.DoesNotExist:
-            raise Http404('Miss episode data')
-        return principals
+            raise Http404('Miss casts data')
+        queryset = self.filter_queryset(principals)
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class TitleCrewView(ModelViewSet):
@@ -89,3 +114,4 @@ class NameBasicsView(ModelViewSet):
     queryset = NameBasics.objects.all()
     serializer_class = serializers.NameBasicsSerializer
     lookup_field = 'nconst'
+    pagination_class = pagination.BasicPagination

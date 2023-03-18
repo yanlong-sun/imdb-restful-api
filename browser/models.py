@@ -130,7 +130,7 @@ db models starts here
 
 class TitleBasics(models.Model):
     index = models.BigIntegerField(blank=True, null=True)
-    tconst = models.CharField(max_length=100, primary_key=True)
+    tconst = models.CharField(max_length=100, primary_key=True, db_index=True)
     titletype = models.CharField(max_length=100,
                                  db_column='titleType',
                                  blank=True, null=True)
@@ -227,7 +227,7 @@ class TitleEpisode(models.Model):
 
 
 class NameBasics(models.Model):
-    nconst = models.CharField(max_length=100, primary_key=True)
+    nconst = models.CharField(max_length=100, primary_key=True, db_index=True)
     primaryname = models.CharField(max_length=100,
                                    db_column='primaryName',
                                    blank=True, null=True)

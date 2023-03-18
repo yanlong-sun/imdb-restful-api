@@ -4,10 +4,10 @@ IMDb Datasets Description: https://www.imdb.com/interfaces/
 
 ## Endpoints
 
-- [Retrieves a list of titles  
-   `GET /api/name/`](#retrieves-a-list-of-titles)
-- [Retrieves a list of names  
-   `GET /api/name/`](#retrieves-a-list-of-names)
+- [Retrieves one or a list of titles  
+   `GET /api/title/<tconst>` or `GET /api/title/`](#retrieves-a-list-of-titles)
+- [Retrieves one or a list of names  
+   `GET /api/name/<nconst>` or `GET /api/name/`](#retrieves-a-list-of-names)
 - [Retrieves a list of cast members for a specific title  
   `GET /api/title/<slug:tconst>/cast`](#retrieves-a-list-of-cast-members-for-a-specific-title)
 - [Retrieves a list of alternate titles for a specific title  
@@ -22,6 +22,8 @@ IMDb Datasets Description: https://www.imdb.com/interfaces/
 ## Retrieves a list of titles.
 
 ##### `GET /api/title/`
+
+##### `GET /api/title/<tconst>` for information about a specific title
 
 Body:
 
@@ -119,6 +121,8 @@ Body:
 ## Retrieves a list of crew members for a specific title.
 
 ##### `GET /api/title/<slug:tconst>/crew`
+
+##### `GET /api/title/<nconst>` for information about a specific name
 
 Parameters:
 
